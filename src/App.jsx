@@ -28,6 +28,7 @@ function App() {
   const [editingId, setEditingId] = useState(null)
   const [editTitle, setEditTitle] = useState('')
   const [editDescription, setEditDescription] = useState('')
+  const [filter, setFilter] = useState('all')
 
   const completedCount = useMemo(
     () => todos.filter((todo) => todo.completed).length,
@@ -35,6 +36,16 @@ function App() {
   )
 
   const pendingCount = todos.length - completedCount
+
+  const filteredTodos = useMemo(() => {
+    if (filter === 'pending') {
+      return todos.filter((todo) => !todo.completed)
+    }
+    if (filter === 'completed') {
+      return todos.filter((todo) => todo.completed)
+    }
+    return todos
+  }, [filter, todos])
 
   const setBusy = (id, value) => {
     setBusyIds((prev) => {
@@ -217,18 +228,30 @@ function App() {
           </p>
         </div>
         <div className="stats">
-          <div className="stat-card">
+          <button
+            type="button"
+            className={`stat-card${filter === 'all' ? ' active' : ''}`}
+            onClick={() => setFilter('all')}
+          >
             <span className="stat-label">전체</span>
             <strong>{todos.length}</strong>
-          </div>
-          <div className="stat-card">
+          </button>
+          <button
+            type="button"
+            className={`stat-card${filter === 'pending' ? ' active' : ''}`}
+            onClick={() => setFilter('pending')}
+          >
             <span className="stat-label">진행 중</span>
             <strong>{pendingCount}</strong>
-          </div>
-          <div className="stat-card">
+          </button>
+          <button
+            type="button"
+            className={`stat-card${filter === 'completed' ? ' active' : ''}`}
+            onClick={() => setFilter('completed')}
+          >
             <span className="stat-label">완료</span>
             <strong>{completedCount}</strong>
-          </div>
+          </button>
         </div>
       </header>
 
@@ -269,7 +292,7 @@ function App() {
           <h2>Todo List</h2>
           <button
             type="button"
-            className="btn ghost"
+            className="btn outline"
             onClick={loadTodos}
             disabled={loading}
           >
@@ -277,19 +300,13 @@ function App() {
           </button>
         </div>
 
-        {error && (
-          <div className="state error" role="alert">
-            {error}
-          </div>
-        )}
-
         {loading ? (
           <div className="state">로딩 중...</div>
-        ) : todos.length === 0 ? (
+        ) : filteredTodos.length === 0 ? (
           <div className="state empty">아직 등록된 할 일이 없습니다.</div>
         ) : (
           <ul className="todo-list">
-            {todos.map((todo) => {
+            {filteredTodos.map((todo) => {
               const isEditing = editingId === todo._id
               return (
                 <li key={todo._id} className={`todo-card${todo.completed ? ' done' : ''}`}>
@@ -325,10 +342,9 @@ function App() {
                           {todo.description && <p>{todo.description}</p>}
                         </>
                       )}
-                      <div className="meta">
-                        {todo.createdAt && <span>생성: {formatDate(todo.createdAt)}</span>}
-                        {todo.updatedAt && <span>수정: {formatDate(todo.updatedAt)}</span>}
-                      </div>
+                      <span className="meta">
+                        {todo.createdAt && `생성: ${formatDate(todo.createdAt)}`}
+                      </span>
                     </div>
                   </div>
                   <div className="todo-actions">
@@ -344,7 +360,7 @@ function App() {
                         </button>
                         <button
                           type="button"
-                          className="btn ghost"
+                          className="btn outline"
                           onClick={cancelEdit}
                           disabled={isBusy(todo._id)}
                         >

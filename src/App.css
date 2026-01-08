@@ -54,6 +54,19 @@
   gap: 6px;
   box-shadow: 0 18px 36px rgba(120, 150, 200, 0.2);
   backdrop-filter: blur(12px);
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px rgba(110, 140, 190, 0.26);
+}
+
+.stat-card.active {
+  border-color: rgba(110, 150, 220, 0.7);
+  box-shadow: 0 20px 40px rgba(110, 140, 200, 0.3);
 }
 
 .stat-card strong {
@@ -169,12 +182,6 @@
   color: #1f2b43;
 }
 
-.btn.ghost {
-  background: rgba(255, 255, 255, 0.55);
-  border-color: rgba(150, 175, 215, 0.35);
-  color: #3a4860;
-}
-
 .btn.outline {
   background: rgba(255, 255, 255, 0.7);
   border-color: rgba(150, 175, 215, 0.35);
@@ -198,11 +205,6 @@
   color: #4d5c76;
 }
 
-.state.error {
-  background: #f2f6ff;
-  color: #2e4b86;
-}
-
 .state.empty {
   background: #ffffff;
   color: #7b8aa3;
@@ -218,9 +220,9 @@
 
 .todo-card {
   display: grid;
-  gap: 16px;
-  padding: 18px;
-  border-radius: 20px;
+  gap: 18px;
+  padding: 22px 24px;
+  border-radius: 24px;
   background: #ffffff;
   border: 1px solid rgba(160, 180, 215, 0.25);
   box-shadow: inset 0 0 0 1px rgba(235, 242, 255, 0.7);
@@ -231,37 +233,46 @@
   border-color: rgba(150, 175, 215, 0.35);
 }
 
+.todo-card.done .todo-content h3,
+.todo-card.done .todo-content p {
+  text-decoration: line-through;
+  color: #7b8aa3;
+}
+
 .todo-main {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 14px;
-  align-items: center;
+  align-items: start;
+}
+
+.todo-content {
+  display: grid;
+  gap: 6px;
 }
 
 .todo-content h3 {
-  margin: 0 0 6px;
-  font-size: 1.1rem;
+  margin: 0 0 4px;
+  font-size: 1.25rem;
   color: #25334d;
 }
 
 .todo-content p {
-  margin: 0 0 8px;
+  margin: 0 0 4px;
   color: #4d5c76;
-}
-
-.meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  font-size: 0.75rem;
-  color: #7b8aa3;
 }
 
 .todo-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 12px;
   justify-content: flex-end;
+  align-items: center;
+}
+
+.meta {
+  font-size: 0.8rem;
+  color: #7b8aa3;
 }
 
 .check {
@@ -278,9 +289,9 @@
 }
 
 .check span {
-  width: 20px;
-  height: 20px;
-  border-radius: 7px;
+  width: 22px;
+  height: 22px;
+  border-radius: 8px;
   border: 2px solid #8aa9e6;
   display: grid;
   place-items: center;
@@ -320,5 +331,6 @@
 
   .todo-actions {
     justify-content: flex-start;
+    align-items: flex-start;
   }
 }
