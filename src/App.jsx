@@ -221,10 +221,10 @@ function App() {
     <div className="page">
       <header className="hero">
         <div className="hero-text">
-          <p className="eyebrow">Local Todo Studio</p>
+          <p className="eyebrow">SeoYeon Todo Studio</p>
           <h1>할 일 관리</h1>
           <p className="subtext">
-            새로운 할 일을 추가하고, 완료 상태를 바꾸거나 내용을 수정하세요.
+            오늘도 많은 일을 해내는 멋쟁이~ 홧팅! 🥰
           </p>
         </div>
         <div className="stats">
@@ -290,14 +290,6 @@ function App() {
       <section className="panel list-panel">
         <div className="panel-head">
           <h2>Todo List</h2>
-          <button
-            type="button"
-            className="btn outline"
-            onClick={loadTodos}
-            disabled={loading}
-          >
-            새로고침
-          </button>
         </div>
 
         {loading ? (
@@ -399,3 +391,4 @@ function App() {
 }
 
 export default App
+
